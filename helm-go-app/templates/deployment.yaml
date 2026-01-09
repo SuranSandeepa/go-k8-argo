@@ -25,13 +25,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: go-app-service
-  namespace: default
+  name: {{ .Release.Name }}-service 
+  namespace: {{ .Values.namespace }}
 spec:
-  type: NodePort     # Makes it accessible on Ubuntu machine
+  type: NodePort
   selector:
-    app: go-app      # Matches the label in the deployment
+    app: go-app
   ports:
-    - port: 80       # Port the Service listens on
-      targetPort: 8080 # Port the Go app listens on inside the container
-      nodePort: 30007  # Fixed port for browser: http://localhost:30007
+    - port: 80
+      targetPort: 8080
+      nodePort: 30007
