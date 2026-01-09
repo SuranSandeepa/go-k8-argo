@@ -1,0 +1,36 @@
+# 1. THE DEPLOYMENT
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-app-deployment
+  labels:
+    app: go-app
+spec:
+  replicas: 2        # Desired State: 2 copies
+  selector:
+    matchLabels:
+      app: go-app    # How the deployment finds its pods
+  template:          # The "Blueprint" for the pods
+    metadata:
+      labels:
+        app: go-app
+    spec:
+      containers:
+      - name: go-app-container
+        image: suranpickme/go-k8-argo:v1  # Docker Hub image
+        ports:
+        - containerPort: 8080
+---
+# 2. THE SERVICE
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-app-service
+spec:
+  type: NodePort     # Makes it accessible on Ubuntu machine
+  selector:
+    app: go-app      # Matches the label in the deployment
+  ports:
+    - port: 80       # Port the Service listens on
+      targetPort: 8080 # Port the Go app listens on inside the container
+      nodePort: 30007  # Fixed port for browser: http://localhost:30007
