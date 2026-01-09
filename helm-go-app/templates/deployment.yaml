@@ -5,7 +5,7 @@ metadata:
   name: {{ .Release.Name }}-deployment
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: {{ .Values.replicaCount }} # Variable from values.yaml
+  replicas: {{ .Values.replicaCount }} 
   selector:
     matchLabels:
       app: go-app
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: go-app
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" # Variable
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" #
         ports:
         - containerPort: 8080
 
