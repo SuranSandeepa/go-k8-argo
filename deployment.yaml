@@ -7,7 +7,7 @@ metadata:
   labels:
     app: go-app
 spec:
-  replicas: 3        # Desired State: 2 copies
+  replicas: 4      
   selector:
     matchLabels:
       app: go-app    # How the deployment finds its pods
