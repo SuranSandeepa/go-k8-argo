@@ -1,0 +1,36 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment # Dynamically names it
+spec:
+  replicas: {{ .Values.replicaCount }} # Variable from values.yaml
+  selector:
+    matchLabels:
+      app: go-app
+  template:
+    metadata:
+      labels:
+        app: go-app
+    spec:
+      containers:
+      - name: go-app
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" # Variable
+        ports:
+        - containerPort: 8080
+
+---
+# 2. THE SERVICE
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-app-service
+  namespace: default
+spec:
+  type: NodePort     # Makes it accessible on Ubuntu machine
+  selector:
+    app: go-app      # Matches the label in the deployment
+  ports:
+    - port: 80       # Port the Service listens on
+      targetPort: 8080 # Port the Go app listens on inside the container
+      nodePort: 30007  # Fixed port for browser: http://localhost:30007

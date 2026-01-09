@@ -1,0 +1,6 @@
+
+replicaCount: 2
+
+image:
+  repository: suranpickme/go-k8-argo
+  tag: v1
