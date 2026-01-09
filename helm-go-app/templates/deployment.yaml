@@ -2,7 +2,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-deployment # Dynamically names it
+  name: {{ .Release.Name }}-deployment
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.replicaCount }} # Variable from values.yaml
   selector:
